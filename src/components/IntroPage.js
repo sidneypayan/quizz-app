@@ -6,7 +6,7 @@ const IntroPage = props => {
 			<h1 className='intro__title'>Quizzical</h1>
 			<p className='intro__subtitle'>Un jeu super fun !</p>
 			<button onClick={props.displayQuizz} className='intro__btn'>
-				Start quiz
+				Start quizz
 			</button>
 		</main>
 	)
