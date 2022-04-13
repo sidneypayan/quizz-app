@@ -12,7 +12,9 @@ function App() {
 
 	useEffect(() => {
 		const fetchQuestions = async () => {
-			const res = await fetch('https://opentdb.com/api.php?amount=5')
+			const res = await fetch(
+				'https://opentdb.com/api.php?amount=5&difficulty=easy'
+			)
 			let data = await res.json()
 
 			const allData = data.results.map(item => {
@@ -34,7 +36,8 @@ function App() {
 								answerText: item.correct_answer,
 								isCorrect: true,
 								isSelected: false,
-							}),
+							})
+							.sort((a, b) => 0.5 - Math.random()),
 					],
 				}
 			})
