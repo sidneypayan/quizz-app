@@ -8,7 +8,7 @@ function App() {
 	const [introPage, setIntroPage] = useState(true)
 	const [count, setCount] = useState(0)
 	const [isSelected, setIsSelected] = useState(false)
-
+	console.log(questions)
 	useEffect(() => {
 		const fetchQuestions = async () => {
 			const res = await fetch('https://opentdb.com/api.php?amount=10')
@@ -16,16 +16,24 @@ function App() {
 
 			const allData = data.results.map(item => {
 				return {
+					id: nanoid(),
 					questionText: item.question,
 					answers: [
 						item.incorrect_answers
 							.map(answer => {
 								return {
+									id: nanoid(),
 									answerText: answer,
 									isCorrect: false,
+									isSelected: false,
 								}
 							})
-							.concat({ answerText: item.correct_answer, isCorrect: true }),
+							.concat({
+								id: nanoid(),
+								answerText: item.correct_answer,
+								isCorrect: true,
+								isSelected: false,
+							}),
 					],
 				}
 			})
@@ -39,20 +47,40 @@ function App() {
 		setIntroPage(prevState => !prevState)
 	}
 
-	function checkAnswer(answer, id) {
-		const question = questions.filter(item => item.id === id)
-		if (answer === question[0].correct_answer) {
-			setCount(prevCount => prevCount + 1)
-		}
+	function checkAnswer(questionId, answerId) {
+		const questionToCheck = questions.find(item => item.id === questionId)
+		const answerToCheck = questionToCheck.answers[0].find(
+			item => item.id === answerId
+		)
+		answerToCheck.isCorrect === true
+			? console.log('Bonne réponse')
+			: console.log('Mauvaise réponse')
+		console.log(questionId, answerId)
+
+		setQuestions(prevQuestions =>
+			prevQuestions.map(question =>
+				question.id === questionId
+					? {
+							...question,
+							answers: [
+								question.answers[0].map(answer =>
+									answer.id === answerId
+										? {
+												...answer,
+												isSelected: !answer.isSelected,
+										  }
+										: answer
+								),
+							],
+					  }
+					: question
+			)
+		)
 	}
 
-	function toggleSelected() {
-		setIsSelected(prevState => !prevState)
-	}
-
-	function displayScore() {
-		console.log(count)
-	}
+	// function displayScore() {
+	// 	console.log(count)
+	// }
 
 	return (
 		<>
@@ -60,11 +88,9 @@ function App() {
 				<IntroPage displayQuizz={displayQuizz} />
 			) : (
 				<Quizz
-					isSelected={isSelected}
-					toggleSelected={toggleSelected}
-					checkAnswer={checkAnswer}
 					questions={questions}
-					displayScore={displayScore}
+					checkAnswer={checkAnswer}
+					// displayScore={displayScore}
 				/>
 			)}
 		</>

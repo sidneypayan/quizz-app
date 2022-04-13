@@ -6,27 +6,27 @@ const Quizz = props => {
 	// 	backgroundColor: props.isSelected && '#D6DBF5',
 	// }
 
-	function handleClick(e, id) {
-		props.checkAnswer(e.target.textContent, id)
-		if (e.target.style.backgroundColor === '') {
-			e.target.style.backgroundColor = '#D6DBF5'
-		} else {
-			e.target.style.backgroundColor = ''
-		}
+	function handleClick(questionId, answerId) {
+		props.checkAnswer(questionId, answerId)
+		// props.toggleSelected(questionId, answerId)
 	}
-
-	console.log(props.questions)
 
 	const questions = props.questions.map(item => {
 		return (
 			<>
-				<h3 className='quizz__question'>{decode(item.questionText)}</h3>
-				<div
-					onClick={e => handleClick(e, item.id)}
-					className='quizz__answers-container'>
-					{item.answers[0].map(item => {
+				<h3 key={item.id} className='quizz__question'>
+					{decode(item.questionText)}
+				</h3>
+				<div className='quizz__answers-container'>
+					{item.answers[0].map(answer => {
 						return (
-							<div className='quizz__answers'>{decode(item.answerText)}</div>
+							<div
+								style={{ backgroundColor: answer.isSelected && '#D6DBF5' }}
+								onClick={() => handleClick(item.id, answer.id)}
+								key={answer.id}
+								className='quizz__answer'>
+								{decode(answer.answerText)}
+							</div>
 						)
 					})}
 				</div>
@@ -36,13 +36,6 @@ const Quizz = props => {
 	})
 
 	return (
-		// <div className='quizz__container'>
-		// 	{allQuestions}
-		// 	<button onClick={props.displayScore} className='intro__btn quizz__btn'>
-		// 		Check answers
-		// 	</button>
-		// </div>
-
 		<div className='quizz__container'>
 			{questions}
 			<button onClick={props.displayScore} className='intro__btn quizz__btn'>

@@ -57,7 +57,7 @@ body {
   gap: .5rem;
 }
 
-.quizz__answers {
+.quizz__answer {
   padding: .25rem .5rem;
   border: 1px solid #293264;
   border-radius: 8px;
