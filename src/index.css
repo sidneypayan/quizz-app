@@ -27,6 +27,7 @@ body {
 }
 
 .intro__btn {
+  display: block;
   cursor: pointer;
   border: none;
   width: 193px;
@@ -35,16 +36,11 @@ body {
   background-color: #4D5B9E;
   color: #FFF;
   font-family: inherit;
-}
-
-.quizz__btn {
   margin: 2rem auto;
-
 }
 
 .quizz__container {
   max-width: 100%;
-  margin: 0 auto;
 }
 
 .quizz__question {
@@ -54,7 +50,7 @@ body {
 .quizz__answers-container {
   cursor: pointer;
   display: flex;
-  gap: .5rem;
+  gap: 1rem;
 }
 
 .quizz__answer {
@@ -67,4 +63,14 @@ body {
   margin-top: 15px;
   width: 80%;
   border-bottom: 1px solid #DBDEF0;
+}
+
+.quizz__score-container {
+display: flex;
+align-items: center;
+}
+
+.quizz__score {
+  font-weight: 700;
+  color: #293264;
 }

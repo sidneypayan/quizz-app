@@ -6,12 +6,13 @@ import Quizz from './components/Quizz'
 function App() {
 	const [questions, setQuestions] = useState([])
 	const [introPage, setIntroPage] = useState(true)
-	const [count, setCount] = useState(0)
-	const [isSelected, setIsSelected] = useState(false)
-	console.log(questions)
+	const [score, setScore] = useState(0)
+	const [displayScore, setDisplayScore] = useState(false)
+	const [reloadGame, setReloadGame] = useState(false)
+
 	useEffect(() => {
 		const fetchQuestions = async () => {
-			const res = await fetch('https://opentdb.com/api.php?amount=10')
+			const res = await fetch('https://opentdb.com/api.php?amount=5')
 			let data = await res.json()
 
 			const allData = data.results.map(item => {
@@ -41,10 +42,20 @@ function App() {
 			setQuestions(allData)
 		}
 		fetchQuestions()
-	}, [])
+	}, [reloadGame])
 
 	function displayQuizz() {
 		setIntroPage(prevState => !prevState)
+	}
+
+	function toggleReloadGame() {
+		setScore(0)
+		setDisplayScore(prevDisplayScore => !prevDisplayScore)
+		setReloadGame(prevReloadGame => !prevReloadGame)
+	}
+
+	function toggleDisplayScore() {
+		setDisplayScore(prevDisplayScore => !prevDisplayScore)
 	}
 
 	function checkAnswer(questionId, answerId) {
@@ -52,10 +63,7 @@ function App() {
 		const answerToCheck = questionToCheck.answers[0].find(
 			item => item.id === answerId
 		)
-		answerToCheck.isCorrect === true
-			? console.log('Bonne réponse')
-			: console.log('Mauvaise réponse')
-		console.log(questionId, answerId)
+		answerToCheck.isCorrect === true && setScore(prevScore => prevScore + 1)
 
 		setQuestions(prevQuestions =>
 			prevQuestions.map(question =>
@@ -69,7 +77,10 @@ function App() {
 												...answer,
 												isSelected: !answer.isSelected,
 										  }
-										: answer
+										: {
+												...answer,
+												isSelected: false,
+										  }
 								),
 							],
 					  }
@@ -77,10 +88,6 @@ function App() {
 			)
 		)
 	}
-
-	// function displayScore() {
-	// 	console.log(count)
-	// }
 
 	return (
 		<>
@@ -90,7 +97,10 @@ function App() {
 				<Quizz
 					questions={questions}
 					checkAnswer={checkAnswer}
-					// displayScore={displayScore}
+					score={score}
+					toggleDisplayScore={toggleDisplayScore}
+					displayScore={displayScore}
+					toggleReloadGame={toggleReloadGame}
 				/>
 			)}
 		</>
