@@ -9,15 +9,13 @@ function App() {
 	const [score, setScore] = useState(0)
 	const [displayScore, setDisplayScore] = useState(false)
 	const [reloadGame, setReloadGame] = useState(false)
+	const [apiUrl, setApiUrl] = useState('https://opentdb.com/api.php?amount=5')
 	const [formData, setFormData] = useState({
 		category: '',
 		difficulty: '',
 	})
-	const [apiUrl, setApiUrl] = useState('https://opentdb.com/api.php?amount=5')
 
-	console.log(apiUrl)
-	console.log(questions)
-
+	// FETCH QUESTIONS
 	useEffect(() => {
 		const fetchQuestions = async () => {
 			const res = await fetch(apiUrl)
@@ -53,6 +51,7 @@ function App() {
 		fetchQuestions()
 	}, [reloadGame, apiUrl])
 
+	// CHANGE URL ON CATEGORY OR DIFFICULTY CHANGE
 	useEffect(() => {
 		if (formData.category && formData.difficulty) {
 			setApiUrl(
@@ -72,6 +71,7 @@ function App() {
 		}
 	}, [formData])
 
+	// UPDATE CATEGORY AND DIFFICULTY
 	function quizzOptions(name, value) {
 		setFormData(prevFormData => {
 			return {
@@ -81,20 +81,24 @@ function App() {
 		})
 	}
 
+	// DISPLAY QUIZZ ON START BNT CLICK
 	function displayQuizz() {
 		setIntroPage(prevState => !prevState)
 	}
 
+	// RELOAD QUIZZ & SET SCORE TO 0
 	function toggleReloadGame() {
 		setScore(0)
 		setDisplayScore(prevDisplayScore => !prevDisplayScore)
 		setReloadGame(prevReloadGame => !prevReloadGame)
 	}
 
+	// DISPLAY SCORE SHOW ANSWERS BTN CLICK
 	function toggleDisplayScore() {
 		setDisplayScore(prevDisplayScore => !prevDisplayScore)
 	}
 
+	// CHECK IF ANSWER IS CORRECT & TOGGLE "IS SELECTED" VALUE
 	function checkAnswer(questionId, answerId) {
 		const questionToCheck = questions.find(item => item.id === questionId)
 		const answerToCheck = questionToCheck.answers[0].find(
@@ -129,7 +133,11 @@ function App() {
 	return (
 		<>
 			{introPage ? (
-				<Home displayQuizz={displayQuizz} quizzOptions={quizzOptions} />
+				<Home
+					displayQuizz={displayQuizz}
+					quizzOptions={quizzOptions}
+					formData={formData}
+				/>
 			) : (
 				<Quizz
 					questions={questions}

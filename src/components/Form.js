@@ -1,27 +1,16 @@
 import React from 'react'
 
 const Form = props => {
-	// const [formData, setFormData] = React.useState({
-	// 	category: '',
-	// 	difficulty: '',
-	// })
-
 	function handleChange(target) {
 		const { name, value } = target
 		props.quizzOptions(name, value)
-		// setFormData(prevFormData => {
-		// 	return {
-		// 		...prevFormData,
-		// 		[name]: value,
-		// 	}
-		// })
 	}
 
 	return (
 		<form className='form'>
 			<label htmlFor='category'>Select Category</label>
 			<select
-				// value={formData.category}
+				value={props.formData.category}
 				name='category'
 				onChange={e => handleChange(e.target)}
 				id='category'>
@@ -53,7 +42,7 @@ const Form = props => {
 			</select>
 			<label htmlFor='difficulty'>Select Difficulty</label>
 			<select
-				// value={formData.difficulty}
+				value={props.formData.difficulty}
 				onChange={e => handleChange(e.target)}
 				name='difficulty'
 				id='difficulty'>
