@@ -80,13 +80,13 @@ const Quizz = props => {
 				{props.displayScore ? (
 					<button
 						onClick={props.toggleReloadGame}
-						className='intro__btn quizz__btn'>
+						className='home__btn quizz__btn'>
 						Play again
 					</button>
 				) : (
 					<button
 						onClick={props.toggleDisplayScore}
-						className='intro__btn quizz__btn'>
+						className='home__btn quizz__btn'>
 						Check answers
 					</button>
 				)}

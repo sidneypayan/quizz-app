@@ -1,0 +1,37 @@
+.quizz {
+  &__container {
+    max-width: 100%;
+  }
+
+  &__question {
+    color: #293264;
+  }
+
+  &__answers-container {
+    cursor: pointer;
+    display: flex;
+    gap: 1rem;
+  }
+
+  &__answer {
+    padding: .25rem .5rem;
+    border: 1px solid #293264;
+    border-radius: 8px;
+  }
+
+  &__line {
+    margin-top: 15px;
+    width: 80%;
+    border-bottom: 1px solid #DBDEF0;
+  }
+
+  &__score-container {
+    display: flex;
+    align-items: center;
+  }
+
+  &__score {
+    font-weight: 700;
+    color: #293264;
+  }
+}

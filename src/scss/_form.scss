@@ -1,0 +1,17 @@
+.form {
+  text-align: left;
+
+  label {
+    display: block;
+    margin-bottom: .25rem;
+    font-weight: bold;
+  }
+
+  select {
+    margin-bottom: .75rem;
+    height: 32px;
+    // border: none;
+    font-family: inherit;
+    width: 100%;
+  }
+}

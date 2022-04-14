@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid'
 import { useEffect, useState } from 'react'
-import IntroPage from './components/IntroPage'
+import Home from './components/Home'
 import Quizz from './components/Quizz'
 
 function App() {
@@ -9,12 +9,18 @@ function App() {
 	const [score, setScore] = useState(0)
 	const [displayScore, setDisplayScore] = useState(false)
 	const [reloadGame, setReloadGame] = useState(false)
+	const [formData, setFormData] = useState({
+		category: '',
+		difficulty: '',
+	})
+	const [apiUrl, setApiUrl] = useState('https://opentdb.com/api.php?amount=5')
+
+	console.log(apiUrl)
+	console.log(questions)
 
 	useEffect(() => {
 		const fetchQuestions = async () => {
-			const res = await fetch(
-				'https://opentdb.com/api.php?amount=5&difficulty=easy'
-			)
+			const res = await fetch(apiUrl)
 			let data = await res.json()
 
 			const allData = data.results.map(item => {
@@ -45,7 +51,35 @@ function App() {
 			setQuestions(allData)
 		}
 		fetchQuestions()
-	}, [reloadGame])
+	}, [reloadGame, apiUrl])
+
+	useEffect(() => {
+		if (formData.category && formData.difficulty) {
+			setApiUrl(
+				`https://opentdb.com/api.php?amount=5&category=${formData.category}&difficulty=${formData.difficulty}`
+			)
+		}
+
+		if (formData.category && !formData.difficulty) {
+			setApiUrl(
+				`https://opentdb.com/api.php?amount=5&category=${formData.category}`
+			)
+		}
+		if (!formData.category && formData.difficulty) {
+			setApiUrl(
+				`https://opentdb.com/api.php?amount=5&difficulty=${formData.difficulty}`
+			)
+		}
+	}, [formData])
+
+	function quizzOptions(name, value) {
+		setFormData(prevFormData => {
+			return {
+				...prevFormData,
+				[name]: value,
+			}
+		})
+	}
 
 	function displayQuizz() {
 		setIntroPage(prevState => !prevState)
@@ -95,7 +129,7 @@ function App() {
 	return (
 		<>
 			{introPage ? (
-				<IntroPage displayQuizz={displayQuizz} />
+				<Home displayQuizz={displayQuizz} quizzOptions={quizzOptions} />
 			) : (
 				<Quizz
 					questions={questions}

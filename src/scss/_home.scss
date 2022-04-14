@@ -1,0 +1,29 @@
+.home {
+  &__container {
+    text-align: center;
+    color: #293264;
+    margin: 0;
+  }
+
+  &__title {
+    font-family: 'Karla', sans-serif;
+    margin-bottom: 7px;
+  }
+
+  &__subtitle {
+    margin-bottom: 29px;
+  }
+
+  &__btn {
+    display: block;
+    cursor: pointer;
+    border: none;
+    width: 193px;
+    height: 52px;
+    border-radius: 15px;
+    background-color: #4D5B9E;
+    color: #FFF;
+    font-family: inherit;
+    margin: 2rem auto;
+  }
+}
