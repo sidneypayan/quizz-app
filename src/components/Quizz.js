@@ -1,13 +1,26 @@
-import React from 'react'
+import { useContext } from 'react'
 import { decode } from 'html-entities'
+import QuizzGameContext from '../context/QuizzGameContext'
+import Spinner from './Spinner'
 
-const Quizz = props => {
+const Quizz = () => {
+	const {
+		quizzData,
+		score,
+		displayScore,
+		checkAnswer,
+		toggleReloadGame,
+		toggleDisplayScore,
+		toggleQuizz,
+		loading,
+	} = useContext(QuizzGameContext)
+
 	const getBackgroundColor = (isCorrect, isSelected) => {
-		if (props.displayScore && isCorrect) {
+		if (displayScore && isCorrect) {
 			return '#94D7A2'
 		}
 
-		if (props.displayScore && isSelected) {
+		if (displayScore && isSelected) {
 			return '#F8BCBC'
 		}
 
@@ -17,7 +30,7 @@ const Quizz = props => {
 	}
 
 	const deleteBorder = (isCorrect, isSelected) => {
-		if (props.displayScore && isCorrect) {
+		if (displayScore && isCorrect) {
 			return 'none'
 		}
 
@@ -27,16 +40,16 @@ const Quizz = props => {
 	}
 
 	const changeOpacity = (isCorrect, isSelected) => {
-		if (props.displayScore && isSelected && !isCorrect) {
+		if (displayScore && isSelected && !isCorrect) {
 			return '0.5'
 		}
 	}
 
 	function handleClick(questionId, answerId) {
-		props.checkAnswer(questionId, answerId)
+		checkAnswer(questionId, answerId)
 	}
 
-	const questions = props.questions.map(item => {
+	const data = quizzData.map(item => {
 		return (
 			<>
 				<h3 key={item.id} className='quizz__question'>
@@ -67,29 +80,28 @@ const Quizz = props => {
 		)
 	})
 
-	return (
+	return loading ? (
+		<Spinner />
+	) : (
 		<div className='quizz__container'>
-			{questions}
+			{data}
 			<div className='quizz__score-container'>
-				{props.displayScore && (
-					<p className='quizz__score'>
-						You scored {props.score} / 5 correct answers
-					</p>
+				{displayScore && (
+					<p className='quizz__score'>You scored {score} / 5 correct answers</p>
 				)}
 
-				{props.displayScore ? (
-					<button
-						onClick={props.toggleReloadGame}
-						className='home__btn quizz__btn'>
-						Play again
+				{displayScore ? (
+					<button onClick={toggleReloadGame} className='home__btn quizz__btn'>
+						Nouvelle série de questions
 					</button>
 				) : (
-					<button
-						onClick={props.toggleDisplayScore}
-						className='home__btn quizz__btn'>
-						Check answers
+					<button onClick={toggleDisplayScore} className='home__btn quizz__btn'>
+						Vérifier les réponses
 					</button>
 				)}
+				<button onClick={toggleQuizz} className='home__btn quizz__btn'>
+					Choix catégorie et niveau de difficulté
+				</button>
 			</div>
 		</div>
 	)
