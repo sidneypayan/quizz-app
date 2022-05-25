@@ -56,13 +56,7 @@ export const QuizzGameProvider = ({ children }) => {
 	}
 
 	// // CHECK IF ANSWER IS CORRECT & TOGGLE "IS SELECTED" VALUE
-	function checkAnswer(questionId, answerId) {
-		const questionToCheck = quizzData.find(item => item.id === questionId)
-		const answerToCheck = questionToCheck.answers[0].find(
-			item => item.id === answerId
-		)
-		answerToCheck.isCorrect === true && setScore(prevScore => prevScore + 1)
-
+	function toggleIsSelected(questionId, answerId) {
 		setQuizzData(prevQuizzData =>
 			prevQuizzData.map(question =>
 				question.id === questionId
@@ -91,11 +85,25 @@ export const QuizzGameProvider = ({ children }) => {
 	function toggleReloadGame() {
 		setScore(0)
 		setDisplayScore(prevDisplayScore => !prevDisplayScore)
+		organizeQuizzData()
 	}
 
 	// // DISPLAY SCORE SHOW ANSWERS BTN CLICK
 	function toggleDisplayScore() {
 		setDisplayScore(prevDisplayScore => !prevDisplayScore)
+	}
+
+	function checkAnswer() {
+		quizzData.forEach(question =>
+			question.answers.forEach(answer => {
+				answer.forEach(item => {
+					if (item.isCorrect && item.isSelected) {
+						setScore(prevScore => prevScore + 1)
+					}
+				})
+			})
+		)
+		toggleDisplayScore()
 	}
 
 	useEffect(() => {
@@ -113,8 +121,9 @@ export const QuizzGameProvider = ({ children }) => {
 				getUrlParams,
 				toggleQuizz,
 				checkAnswer,
+				toggleIsSelected,
 				toggleReloadGame,
-				toggleDisplayScore,
+
 				quizzDisplayed,
 				loading,
 			}}>

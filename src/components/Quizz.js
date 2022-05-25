@@ -8,9 +8,9 @@ const Quizz = () => {
 		quizzData,
 		score,
 		displayScore,
-		checkAnswer,
+		toggleIsSelected,
 		toggleReloadGame,
-		toggleDisplayScore,
+		checkAnswer,
 		toggleQuizz,
 		loading,
 	} = useContext(QuizzGameContext)
@@ -46,7 +46,7 @@ const Quizz = () => {
 	}
 
 	function handleClick(questionId, answerId) {
-		checkAnswer(questionId, answerId)
+		toggleIsSelected(questionId, answerId)
 	}
 
 	const data = quizzData.map(item => {
@@ -95,7 +95,7 @@ const Quizz = () => {
 						Nouvelle série de questions
 					</button>
 				) : (
-					<button onClick={toggleDisplayScore} className='home__btn quizz__btn'>
+					<button onClick={checkAnswer} className='home__btn quizz__btn'>
 						Vérifier les réponses
 					</button>
 				)}
