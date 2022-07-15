@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid'
 import { createContext } from 'react'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import useAPI from '../hooks/useAPI'
 
 const QuizzGameContext = createContext()
