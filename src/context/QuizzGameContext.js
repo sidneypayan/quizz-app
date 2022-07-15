@@ -53,6 +53,8 @@ export const QuizzGameProvider = ({ children }) => {
 		setQuizzData([])
 		setLoading(true)
 		setQuizzDisplayed(prevState => !prevState)
+
+		organizeQuizzData()
 	}
 
 	// // CHECK IF ANSWER IS CORRECT & TOGGLE "IS SELECTED" VALUE
@@ -105,12 +107,6 @@ export const QuizzGameProvider = ({ children }) => {
 		)
 		toggleDisplayScore()
 	}
-
-	useEffect(() => {
-		if (quizzDisplayed) {
-			organizeQuizzData()
-		}
-	}, [quizzDisplayed])
 
 	return (
 		<QuizzGameContext.Provider
