@@ -100,7 +100,7 @@ const Quizz = () => {
 					</button>
 				)}
 				<button onClick={toggleQuizz} className='home__btn quizz__btn'>
-					Choix catégorie et niveau de difficulté
+					Choix catégorie / difficulté
 				</button>
 			</div>
 		</div>

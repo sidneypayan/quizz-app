@@ -40,7 +40,7 @@ const Form = () => {
 	return (
 		<>
 			<h1 className='home__title'>Quizzical</h1>
-			<p className='home__subtitle'>Un jeu super fun !</p>
+			<p className='home__subtitle'>Apprendre en s'amusant !</p>
 			<form className='form' onSubmit={handleSubmit}>
 				<label htmlFor='category'>Select Category</label>
 				<select
@@ -85,7 +85,7 @@ const Form = () => {
 					<option value='medium'>Medium</option>
 					<option value='hard'>Hard</option>
 				</select>
-				<button className='home__btn'>Start quizz</button>
+				<button className='home__btn'>Commencer le quizz</button>
 			</form>
 		</>
 	)
