@@ -51,10 +51,8 @@ const Quizz = () => {
 
 	const data = quizzData.map(item => {
 		return (
-			<>
-				<h3 key={item.id} className='quizz__question'>
-					{decode(item.questionText)}
-				</h3>
+			<div key={item.id}>
+				<h3 className='quizz__question'>{decode(item.questionText)}</h3>
 				<div className='quizz__answers-container'>
 					{item.answers[0].map(answer => {
 						return (
@@ -76,7 +74,7 @@ const Quizz = () => {
 					})}
 				</div>
 				<div className='quizz__line'></div>
-			</>
+			</div>
 		)
 	})
 

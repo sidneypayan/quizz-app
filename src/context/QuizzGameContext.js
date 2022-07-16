@@ -14,10 +14,6 @@ export const QuizzGameProvider = ({ children }) => {
 	const [urlParams, setUrlParams] = useState('')
 	const [loading, setLoading] = useState(true)
 
-	const getUrlParams = params => {
-		setUrlParams(params)
-	}
-
 	const organizeQuizzData = async () => {
 		let data = await getQuizzData(urlParams)
 		data = data.map(item => {
@@ -47,6 +43,10 @@ export const QuizzGameProvider = ({ children }) => {
 
 		setQuizzData(data)
 		setLoading(false)
+	}
+
+	const getUrlParams = params => {
+		setUrlParams(params)
 	}
 
 	function toggleQuizz() {

@@ -14,11 +14,11 @@ const Form = () => {
 	function handleChange(target) {
 		const { name, value } = target
 		setFormData(prevFormData => ({ ...prevFormData, [name]: value }))
+		getUrlParams(urlOptions)
 	}
 
 	function handleSubmit(e) {
 		e.preventDefault()
-		getUrlParams(urlOptions)
 		toggleQuizz()
 	}
 
